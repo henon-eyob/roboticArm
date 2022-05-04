@@ -21,7 +21,7 @@ servoPinHand = board.get_pin('d:5:s')  # pin 5 Arduino
 servoPinBottom = board.get_pin('d:4:s')  # pin 4 Arduino
 servoPinJointUp = board.get_pin('d:3:s')  # pin 3 Arduino
 servoPinJointBottom = board.get_pin('d:2:s')  # pin 2 Arduino
-potentiometer = board.get_pin('a:3:i')
+
 detector = htm.handDetector(detectionCon=0.7, maxHands=1)
 ano = HandDetector(detectionCon=0.8, maxHands=1)
 minHand, maxHand = 20, 250
