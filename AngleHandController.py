@@ -13,7 +13,7 @@ cap.set(3, wCam)
 cap.set(4, hCam)
 pTime = 0
 
-port = "COM13"
+port = "COM8"
 board = pyfirmata.Arduino(port)
 it = pyfirmata.util.Iterator(board)
 it.start()
@@ -67,7 +67,7 @@ while True:
         servoPinJointUp.write(servoValJointUp)
 
         angleJointBottom = pmDetector.findAngle(img, 14, 16, 22)
-        servoValJointBottom = np.interp(angleJointBottom, [minHand, maxHand], [120, 180])
+        servoValJointBottom = np.interp(angleJointBottom, [minHand, maxHand], [160, 180])
         servoPinJointBottom.write(servoValJointBottom)
 
     cv2.imshow("img", img)

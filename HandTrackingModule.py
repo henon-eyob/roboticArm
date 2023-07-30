@@ -14,7 +14,8 @@ class handDetector():
         self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex,
                                         self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
-
+        self.lmlist = []
+        self.tips_id = [4, 8, 12, 16, 20]
     def handsFinder(self, image, draw=True):
         imageRGB = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imageRGB)
@@ -39,6 +40,17 @@ class handDetector():
 
         return lmlist
 
+    def fingers_up(self):
+
+        if len(self.lmlist) != 0:
+            finger_counter = []
+
+            for tip_id in range(1, 5):
+                if self.lmlist[self.tips_id[tip_id]][2] < self.lmlist[self.tips_id[tip_id] - 2][2]:
+                    finger_counter.append(1)
+                else:
+                    finger_counter.append(0)
+                return finger_counter
 
 def main():
     pTime = 0
@@ -52,16 +64,15 @@ def main():
         lmList = tracker.positionFinder(image)
         if len(lmList) != 0:
             print(lmList[4])
-
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
-
+        finger_up = tracker.fingers_up()
+        print(finger_up)
         cv2.putText(image, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3,
                     (255, 0, 255), 3)
         cv2.imshow("Video", image)
         cv2.waitKey(3)
-
 
 if __name__ == "__main__":
     main()
